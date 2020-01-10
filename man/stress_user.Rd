@@ -58,12 +58,18 @@ plot(x$normal,get_weights(res1), pch=".")
 \references{
 \insertRef{Pesenti2019reverse}{SWIM}\cr
 
+    \insertRef{Pesenti2020SSRN}{SWIM}\cr
+    
     \insertRef{Csiszar1975}{SWIM}
 }
 \seealso{
-Other stress functions: \code{\link{stress_VaR_ES}},
-  \code{\link{stress_VaR}}, \code{\link{stress_mean_sd}},
-  \code{\link{stress_mean}}, \code{\link{stress_moment}},
-  \code{\link{stress_prob}}, \code{\link{stress}}
+Other stress functions: 
+\code{\link{stress_VaR_ES}()},
+\code{\link{stress_VaR}()},
+\code{\link{stress_mean_sd}()},
+\code{\link{stress_mean}()},
+\code{\link{stress_moment}()},
+\code{\link{stress_prob}()},
+\code{\link{stress}()}
 }
 \concept{stress functions}

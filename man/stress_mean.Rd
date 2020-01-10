@@ -69,6 +69,8 @@ summary(res2)
 \references{
 \insertRef{Pesenti2019reverse}{SWIM}\cr
 
+    \insertRef{Pesenti2020SSRN}{SWIM}\cr
+    
     \insertRef{Csiszar1975}{SWIM}
 }
 \seealso{
@@ -76,9 +78,13 @@ See \code{\link{stress_mean_sd}} for stressing means
     and standard deviations jointly, and \code{\link{stress_moment}} for 
     moment constraints.
 
-Other stress functions: \code{\link{stress_VaR_ES}},
-  \code{\link{stress_VaR}}, \code{\link{stress_mean_sd}},
-  \code{\link{stress_moment}}, \code{\link{stress_prob}},
-  \code{\link{stress_user}}, \code{\link{stress}}
+Other stress functions: 
+\code{\link{stress_VaR_ES}()},
+\code{\link{stress_VaR}()},
+\code{\link{stress_mean_sd}()},
+\code{\link{stress_moment}()},
+\code{\link{stress_prob}()},
+\code{\link{stress_user}()},
+\code{\link{stress}()}
 }
 \concept{stress functions}

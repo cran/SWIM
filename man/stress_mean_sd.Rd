@@ -77,12 +77,18 @@ res2 <- stress_mean_sd(x = x, k = 1, new_means = 0.1,
 \references{
 \insertRef{Pesenti2019reverse}{SWIM}\cr
 
+    \insertRef{Pesenti2020SSRN}{SWIM}\cr
+    
     \insertRef{Csiszar1975}{SWIM}
 }
 \seealso{
-Other stress functions: \code{\link{stress_VaR_ES}},
-  \code{\link{stress_VaR}}, \code{\link{stress_mean}},
-  \code{\link{stress_moment}}, \code{\link{stress_prob}},
-  \code{\link{stress_user}}, \code{\link{stress}}
+Other stress functions: 
+\code{\link{stress_VaR_ES}()},
+\code{\link{stress_VaR}()},
+\code{\link{stress_mean}()},
+\code{\link{stress_moment}()},
+\code{\link{stress_prob}()},
+\code{\link{stress_user}()},
+\code{\link{stress}()}
 }
 \concept{stress functions}

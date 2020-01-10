@@ -4,7 +4,7 @@
 \alias{stress_moment}
 \title{Stressing Moments}
 \usage{
-stress_moment(x, f, k, m, ...)
+stress_moment(x, f, k, m, show = FALSE, ...)
 }
 \arguments{
 \item{x}{A vector, matrix or data frame 
@@ -25,6 +25,8 @@ to the input variables of \code{f[[i]]}.}
 \item{m}{Numeric vector, same length as \code{f}, containing
 the stressed moments of \code{f(x)}. Must be in the
 range of \code{f(x)}.}
+
+\item{show}{Logical. If true, print the result of the call to \code{nleqslv}.}
 
 \item{...}{Additional arguments to be passed to 
 \code{\link[nleqslv]{nleqslv}}.}
@@ -52,12 +54,18 @@ Provides weights on simulated scenarios from a baseline stochastic
 The moment constraints are given by \code{E^Q( f(x) ) = m}, 
     where \code{E^Q} denotes the expectation under the stressed 
     model. \code{stress_moment} solves the subsequent set of equations 
-    with respect to theta, using \code{\link[nleqslv]{nleqslv}}:
+    with respect to theta, using \code{\link[nleqslv]{nleqslv}} from package 
+    \code{\link[nleqslv]{nleqslv}}:
     
     \deqn{E^Q( f(x) ) = E( f(x) * exp(theta * f(x)) ) = m.}
     
     There is no guarantee that the set of equations 
-    will have a solution, or that the solution is unique.
+    will have a solution, or that the solution is unique. \code{SWIM} will 
+    return a warning if the termination code provided by \code{nleqslv} is 
+    different from 1 (convergence has been achieved). It is recommended to 
+    check the result of the call to \code{nleqslv} using the "show" argument. The 
+    user is referred to the \code{\link[nleqslv]{nleqslv}} documentation for 
+    further details.
 }
 \examples{
 set.seed(0)
@@ -80,7 +88,7 @@ stats::weighted.mean(x[, 1] * x[, 2], w = get_weights(res1))
 ## stressing jointly the tail probabilities of columns 1,3  
 res2 <- stress_moment(x = x, 
   f = list(function(x)(x > 1.5), function(x)(x > 0.9)), 
-  k = c(1, 3), m = c(0.9, 0.9))
+  k = list(1, 3), m = c(0.9, 0.9))
 summary(res2)
 ## probabilities under the stressed model
 mean((x[, 1] > 1.5) * get_weights(res2))
@@ -90,6 +98,8 @@ mean((x[, 3] > 0.9) * get_weights(res2))
 \references{
 \insertRef{Pesenti2019reverse}{SWIM}\cr
 
+    \insertRef{Pesenti2020SSRN}{SWIM}\cr
+    
     \insertRef{Csiszar1975}{SWIM}
 }
 \seealso{
@@ -97,9 +107,13 @@ See \code{\link{stress_mean}} for stressing means and
     \code{\link{stress_mean_sd}} for stressing mean and standard 
     deviation jointly.
 
-Other stress functions: \code{\link{stress_VaR_ES}},
-  \code{\link{stress_VaR}}, \code{\link{stress_mean_sd}},
-  \code{\link{stress_mean}}, \code{\link{stress_prob}},
-  \code{\link{stress_user}}, \code{\link{stress}}
+Other stress functions: 
+\code{\link{stress_VaR_ES}()},
+\code{\link{stress_VaR}()},
+\code{\link{stress_mean_sd}()},
+\code{\link{stress_mean}()},
+\code{\link{stress_prob}()},
+\code{\link{stress_user}()},
+\code{\link{stress}()}
 }
 \concept{stress functions}
