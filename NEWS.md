@@ -1,3 +1,13 @@
+
+# SWIM 0.2.1
+
+## Minor changes
+
+- add vignette
+- fix bug in `merge()`. 
+- fix bug in `sensitivity()`. 
+
+
 # SWIM 0.2.0
 
 ## Major changes
