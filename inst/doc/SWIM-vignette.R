@@ -47,10 +47,10 @@ plot_cdf(str.mean, xCol = "Z1", base = TRUE)
 plot_cdf(str.mean, xCol = 4, base = TRUE)
 
 ## ---- example1-weights-mean, warning = FALSE, message = FALSE, fig.show='hold', out.width = '50%',fig.cap = "Scenario weights against observations of model components  $Z_1$ (left) and $Y$ (right), subject to a stress on the mean of $Z_1$."----
-# extract weights from stressed model
-w.mean <- get_weights(str.mean)
-plot(Z1[1:5000], w.mean[1:5000], pch = 20, xlab = "Z1", ylab = "scenario weights")
-plot(Y[1:5000], w.mean[1:5000], pch = 20, xlab = "Y", ylab = "scenario weights")
+# parameter n specifies the number of scenario weights plotted
+plot_weights(str.mean, xCol = "Z1", n = 1000)
+# specifying the limits of the x-axis
+plot_weights(str.mean, xCol = "Y", x_limits = c(90, 550), n = 1000)
 
 ## ---- example1_second_stress, cache = TRUE, echo = -2, warning = FALSE, message = FALSE----
 str.sd <- stress(type = "mean sd", x = dat, k = 1, new_means = 100, new_sd = 50)
@@ -62,9 +62,8 @@ plot_cdf(str.sd, xCol = "Z1", base = TRUE)
 plot_cdf(str.sd, xCol = 4, base = TRUE)
 
 ## ---- example1-weights-sd, cache = TRUE, warning = FALSE, message = FALSE, fig.show='hold', out.width = '50%',fig.cap = "Scenario weights against observations of model components  $Z_1$ (left) and $Y$ (right), subject to a stress on the standard deviation of $Z_1$."----
-w.sd <- get_weights(str.sd)
-plot(Z1[1:5000], w.sd[1:5000], pch = 20, xlab = "Z1", ylab = "scenario weights")
-plot(Y[1:5000], w.sd[1:5000], pch = 20, xlab = "Y", ylab = "scenario weights")
+plot_weights(str.sd, xCol = "Z1", n = 2000)
+plot_weights(str.sd, xCol = "Y", n = 2000)
 
 ## ---- example1_third_stress, cache = FALSE, error=TRUE, linewidth = 80--------
 stress(type = "mean", x = dat, k = 1, new_means = 300)
@@ -103,14 +102,9 @@ options(digits = 3)
 get_specs(stress.credit)
 
 ## ---- credit-weights, warning = FALSE, cache = FALSE, message = FALSE, fig.show='hold', out.width = '50%',fig.cap = "Scenario weights against the portfolio loss $L$ for stressing VaR (left) and stressing both VaR and ES (right).", tidy = FALSE----
-# extract weights from SWIM object
-w.credit <- get_weights(stress.credit)
-# only plot a subset of the sceranio weights 
-grid <- seq(1, 100000, by = 50)
-plot(credit_data[grid, 1], w.credit[grid, 1], pch = 20, xlab = "L", 
-     ylab = "scenario weights")
-plot(credit_data[grid, 1], w.credit[grid, 2], pch = 20, xlab = "L", 
-     ylab = "scenario weights")
+plot_weights(stress.credit, xCol = "L", wCol = 1, n = 2000)
+# parameter `wCol` specifies the stresses, whose scenario weights are plotted.
+plot_weights(stress.credit, xCol = "L", wCol = 2, n = 7000)
 
 ## ---- CM-histL, cache = FALSE, fig.cap = "Histogram of the portfolio loss $L$ under the baseline and the two stressed models.", out.width = '80%', fig.align = 'center'----
 plot_hist(object = stress.credit, xCol = "L", base = TRUE)
@@ -189,14 +183,7 @@ f.stress.joint <- c(f.stress, function(x)1 * (x[1] > VaR.L2 * 1.2) * (x[2] > VaR
 stress.credit.L2L3 <- stress_moment(x = stress.credit.L2L3, f = f.stress.joint, k = list(3,4,c(3, 4)), m = c(0.9, 0.9, 0.06))
 
 ## ---- CM-joint-stress-VaR-2-effect, echo = TRUE, cache = FALSE, fig.cap = "Quantiles of the aggregate loss $L$ under the baseline (blue), the stress on the tails of $L_2$ and $L_3$ (red), and the additional stress on the joint tail of $L_2$ and $L_3$ (green).", out.width = '80%', fig.align = 'center'----
-# stressed quantiles
-VaR.level <- seq(0.75, 0.99, by = 0.003)
-VaR.stress1 <- VaR_stressed(stress.credit.L2L3, alpha = VaR.level, xCol = "L", wCol = 1, base = TRUE)
-VaR.stress2 <- VaR_stressed(stress.credit.L2L3, alpha = VaR.level, xCol = "L", wCol = 2, base = FALSE)
-
-plot(VaR.level, VaR.stress1[, 2], col = "blue", type = "l", xlab = "quantile levels", ylab ="Quantiles of L under different models")
-lines(VaR.level, VaR.stress1[, 1], col = "red")
-lines(VaR.level, VaR.stress2, col = "darkgreen")
+plot_quantile(stress.credit.L2L3, xCol = "L", wCol = "all", base = TRUE, x_limits = c(0.75, 1))
 
 ## ---- eval=FALSE, tidy = FALSE------------------------------------------------
 #    set.seed(1)
